@@ -12,7 +12,7 @@ resource "aws_eip" "default" {
   tags = merge(
     local.tags,
     {
-      "Name" = format("%s-%s", var.alias, local.az_map[element(var.availability_zones, count.index)])
+      "Name" = format("%s-%s", var.namespace, local.az_map[element(var.availability_zones, count.index)])
     }
   )
 
@@ -29,7 +29,7 @@ resource "aws_nat_gateway" "default" {
   tags = merge(
     local.tags,
     {
-      "Name" = format("%s-%s", var.alias, local.az_map[element(var.availability_zones, count.index)])
+      "Name" = format("%s-%s", var.namespace, local.az_map[element(var.availability_zones, count.index)])
     }
   )
 

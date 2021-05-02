@@ -18,7 +18,7 @@ resource "aws_subnet" "public" {
   tags = merge(
     local.tags,
     {
-      "Name" = format("%s-public-%s", var.alias, local.az_map[element(var.availability_zones, count.index)])
+      "Name" = format("%s-public-%s", var.namespace, local.az_map[element(var.availability_zones, count.index)])
     }
   )
 
@@ -31,7 +31,7 @@ resource "aws_route_table" "public" {
   tags = merge(
     local.tags,
     {
-      "Name" = format("%s-public-%s", var.alias, local.az_map[element(var.availability_zones, count.index)])
+      "Name" = format("%s-public-%s", var.namespace, local.az_map[element(var.availability_zones, count.index)])
     }
   )
 }
