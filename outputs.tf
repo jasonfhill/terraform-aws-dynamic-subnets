@@ -38,11 +38,6 @@ output "nat_gateway_public_ips" {
   value       = aws_eip.default.*.public_ip
 }
 
-output "nat_instance_ids" {
-  description = "IDs of the NAT Instances created"
-  value       = aws_instance.nat_instance.*.id
-}
-
 output "availability_zones" {
   description = "List of Availability Zones where subnets were created"
   value       = var.availability_zones
@@ -50,5 +45,5 @@ output "availability_zones" {
 
 output "nat_ips" {
   description = "IP Addresses in use for NAT"
-  value       = coalescelist(aws_eip.default.*.public_ip, aws_eip.nat_instance.*.public_ip, data.aws_eip.nat_ips.*.public_ip, tolist([""]))
+  value       = coalescelist(aws_eip.default.*.public_ip, tolist([""]))
 }

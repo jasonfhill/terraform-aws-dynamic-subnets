@@ -1,3 +1,11 @@
+variable "alias" {
+  description = "Namespace to use"
+  type        = string
+}
+variable "region" {
+  description = "AWS Region to use"
+  type        = string
+}
 variable "subnet_type_tag_key" {
   type        = string
   default     = "cpco.io/subnet/type"
@@ -65,24 +73,6 @@ variable "nat_gateway_enabled" {
   default     = true
 }
 
-variable "nat_instance_enabled" {
-  type        = bool
-  description = "Flag to enable/disable NAT Instances to allow servers in the private subnets to access the Internet"
-  default     = false
-}
-
-variable "nat_instance_type" {
-  type        = string
-  description = "NAT Instance type"
-  default     = "t3.micro"
-}
-
-variable "nat_elastic_ips" {
-  type        = list(string)
-  default     = []
-  description = "Existing Elastic IPs to attach to the NAT Gateway(s) or Instance(s) instead of creating new ones."
-}
-
 variable "map_public_ip_on_launch" {
   type        = bool
   default     = true
@@ -131,8 +121,76 @@ variable "metadata_http_tokens_required" {
   description = "Whether or not the metadata service requires session tokens, also referred to as Instance Metadata Service Version 2."
 }
 
-variable "root_block_device_encrypted" {
-  type        = bool
-  default     = true
-  description = "Whether to encrypt the root block device"
+//
+//variable "context" {
+//  type = any
+//  default = {
+//    enabled             = true
+//    namespace           = null
+//    environment         = null
+//    stage               = null
+//    name                = null
+//    delimiter           = null
+//    attributes          = []
+//    tags                = {}
+//    additional_tag_map  = {}
+//    regex_replace_chars = null
+//    label_order         = []
+//    id_length_limit     = null
+//    label_key_case      = null
+//    label_value_case    = null
+//  }
+//  description = <<-EOT
+//    Single object for setting entire context at once.
+//    See description of individual variables for details.
+//    Leave string and numeric variables as `null` to use default value.
+//    Individual variable settings (non-null) override settings in context object,
+//    except for attributes, tags, and additional_tag_map, which are merged.
+//  EOT
+//
+//  validation {
+//    condition     = lookup(var.context, "label_key_case", null) == null ? true : contains(["lower", "title", "upper"], var.context["label_key_case"])
+//    error_message = "Allowed values: `lower`, `title`, `upper`."
+//  }
+//
+//  validation {
+//    condition     = lookup(var.context, "label_value_case", null) == null ? true : contains(["lower", "title", "upper", "none"], var.context["label_value_case"])
+//    error_message = "Allowed values: `lower`, `title`, `upper`, `none`."
+//  }
+//}
+//
+//variable "enabled" {
+//  type        = bool
+//  default     = null
+//  description = "Set to false to prevent the module from creating any resources"
+//}
+
+variable "namespace" {
+  type        = string
+  default     = null
+  description = "Namespace, which could be your organization name or abbreviation, e.g. 'eg' or 'cp'"
+}
+
+variable "environment" {
+  type        = string
+  default     = null
+  description = "Environment, e.g. 'uw2', 'us-west-2', OR 'prod', 'staging', 'dev', 'UAT'"
+}
+
+variable "stage" {
+  type        = string
+  default     = null
+  description = "Stage, e.g. 'prod', 'staging', 'dev', OR 'source', 'build', 'test', 'deploy', 'release'"
+}
+
+variable "name" {
+  type        = string
+  default     = null
+  description = "Solution name, e.g. 'app' or 'jenkins'"
+}
+
+variable "tags" {
+  type        = map(string)
+  default     = {}
+  description = "Additional tags (e.g. `map('BusinessUnit','XYZ')`"
 }
